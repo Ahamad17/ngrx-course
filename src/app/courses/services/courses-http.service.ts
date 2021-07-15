@@ -44,5 +44,13 @@ export class CoursesHttpService {
         return this.http.put('/api/course/' + courseId, changes);
     }
 
+    addCourse(course: Course) {
+      return this.http.post('/api/course', course);
+    }
+
+    deleteCourse(courseId: number) {
+      return this.http.delete('/api/course/' + courseId);
+    }
+
 
 }

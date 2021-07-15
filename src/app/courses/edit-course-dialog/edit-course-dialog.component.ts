@@ -7,7 +7,7 @@ import { CoursesHttpService } from '../services/courses-http.service';
 import { Update } from '@ngrx/entity';
 import { AppState } from '../../reducers';
 import { Store } from '@ngrx/store';
-import { courseUpdated } from '../course.actions';
+import { CoursesFacadeService } from '../services/courses-facade.service';
 
 @Component({
   selector: 'course-dialog',
@@ -31,7 +31,7 @@ export class EditCourseDialogComponent {
     private dialogRef: MatDialogRef<EditCourseDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data,
     private coursesService: CoursesHttpService,
-    private store: Store<AppState>) {
+    private coursesFacadeService: CoursesFacadeService) {
 
     this.dialogTitle = data.dialogTitle;
     this.course = data.course;
@@ -47,7 +47,7 @@ export class EditCourseDialogComponent {
     if (this.mode === 'update') {
       this.form = this.fb.group(formControls);
       this.form.patchValue({ ...data.course });
-    } else if (this.mode == 'create') {
+    } else if (this.mode === 'create') {
       this.form = this.fb.group({
         ...formControls,
         url: ['', Validators.required],
@@ -67,13 +67,13 @@ export class EditCourseDialogComponent {
       ...this.form.value
     };
 
-    const update: Update<Course> = {
-      id: course.id,
-      changes: course
-    };
-
-    this.store.dispatch(courseUpdated({update}));
-    this.dialogRef.close();
+    if (this.mode === 'update') {
+      this.coursesFacadeService.update(course);
+      this.dialogRef.close();
+    } else if (this.mode === 'create') {
+      this.coursesFacadeService.add(course);
+      this.dialogRef.close();
+    }
   }
 
 

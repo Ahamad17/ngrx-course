@@ -28,9 +28,10 @@ import {compareLessons, Lesson} from './model/lesson';
 import { resolve } from 'url';
 import { CoursesResolver } from './courses.resolver';
 import { EffectsModule } from '@ngrx/effects';
-import { CoursesEffects } from './courses.effects';
 import { StoreModule } from '@ngrx/store';
-import { coursesReducer } from './reducers/course.reducers';
+import { CoursesEffects, CoursesEntityFacadeService, coursesReducer } from './services/NgRx-entity.service';
+import { CoursesFacadeService } from './services/courses-facade.service';
+import { CourseDataService, CourseEntityService, CoursesDataFacadeService } from './services/NgRx-Data.service';
 
 
 export const coursesRoutes: Routes = [
@@ -44,6 +45,18 @@ export const coursesRoutes: Routes = [
     component: CourseComponent
   }
 ];
+
+const entityMetadata: EntityMetadataMap = {
+  Course: {
+    sortComparer: compareCourses,
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  Lesson: {
+    sortComparer: compareLessons
+  }
+};
 
 
 @NgModule({
@@ -66,7 +79,7 @@ export const coursesRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(coursesRoutes),
     EffectsModule.forFeature([CoursesEffects]),
-    StoreModule.forFeature('courses', coursesReducer)
+    StoreModule.forFeature('courses-entity', coursesReducer)
   ],
   declarations: [
     HomeComponent,
@@ -83,13 +96,21 @@ export const coursesRoutes: Routes = [
   entryComponents: [EditCourseDialogComponent],
   providers: [
     CoursesHttpService,
-    CoursesResolver
+    CoursesResolver,
+    CoursesEntityFacadeService,
+    CoursesFacadeService,
+    CoursesDataFacadeService,
+    CourseDataService,
+    CourseEntityService
   ]
 })
 export class CoursesModule {
 
-  constructor() {
-
+  constructor(private eds: EntityDefinitionService,
+    private entityDataService: EntityDataService,
+    private coursesDataService: CourseDataService) {
+    eds.registerMetadataMap(entityMetadata);
+    entityDataService.registerService('Course', coursesDataService);
   }
 
 

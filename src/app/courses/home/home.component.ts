@@ -8,7 +8,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { CoursesHttpService } from '../services/courses-http.service';
 import { AppState } from '../../reducers';
 import { select, Store } from '@ngrx/store';
-import { selectAdvancedCourses, selectBeginnerCourses, selectPromoTotal } from '../courses.selectors';
+import { CoursesFacadeService } from '../services/courses-facade.service';
 
 
 
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
 
 
   constructor(
-    private dialog: MatDialog, private store: Store<AppState>) {
+    private dialog: MatDialog, private coursesFacadeService: CoursesFacadeService) {
 
   }
 
@@ -38,9 +38,9 @@ export class HomeComponent implements OnInit {
   }
 
   reload() {
-    this.beginnerCourses$ = this.store.pipe(select(selectBeginnerCourses));
-    this.advancedCourses$ = this.store.pipe(select(selectAdvancedCourses));
-    this.promoTotal$ = this.store.pipe(select(selectPromoTotal));
+    this.beginnerCourses$ = this.coursesFacadeService.beginnerCourses$;
+    this.advancedCourses$ = this.coursesFacadeService.advancedCourses$;
+    this.promoTotal$ = this.coursesFacadeService.promoTotal$;
   }
 
   onAddCourse() {
