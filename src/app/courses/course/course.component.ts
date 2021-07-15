@@ -1,13 +1,11 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../model/course';
 import { Observable } from 'rxjs';
 import { Lesson } from '../model/lesson';
-import { concatMap, delay, filter, first, map, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
-import { CoursesHttpService } from '../services/courses-http.service';
+import { delay, map, tap, withLatestFrom } from 'rxjs/operators';
 import { LessonEntityService } from '../services/lesson-entity.service';
-import { CourseEntityService } from '../services/course.entity.service';
-import { of } from 'rxjs';
+import { CoursesFacadeService } from '../services/courses-facade.service';
 
 
 @Component({
@@ -29,16 +27,14 @@ export class CourseComponent implements OnInit {
   nextPage = 0;
 
   constructor(
-    private route: ActivatedRoute, private courseService: CourseEntityService, private lessonService: LessonEntityService) {
+    private route: ActivatedRoute, private courseFacade: CoursesFacadeService, private lessonService: LessonEntityService) {
 
   }
 
   ngOnInit() {
 
     const courseUrl = this.route.snapshot.paramMap.get('courseUrl');
-    this.course$ = this.courseService.entities$.pipe(
-      map(courses => courses.find(course => course.url === courseUrl)
-      ));
+    this.course$ = this.courseFacade.find(courseUrl);
 
     this.lessons$ = this.lessonService.entities$.pipe(
       withLatestFrom(this.course$),

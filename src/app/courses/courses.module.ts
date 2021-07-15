@@ -25,10 +25,9 @@ import { EntityDataService, EntityDefinitionService, EntityMetadata, EntityMetad
 import {compareCourses, Course} from './model/course';
 
 import {compareLessons, Lesson} from './model/lesson';
-import { CourseEntityService } from './services/course.entity.service';
 import { CoursesResolver } from './services/courses.resolver';
-import { CourseDataService } from './services/courses-data.service';
 import { LessonEntityService } from './services/lesson-entity.service';
+import { CourseEntityService, CourseDataService, CoursesFacadeService } from './services/courses-facade.service';
 
 
 export const coursesRoutes: Routes = [
@@ -94,7 +93,8 @@ const entityMetadata: EntityMetadataMap = {
     CourseEntityService,
     LessonEntityService,
     CoursesResolver,
-    CourseDataService
+    CourseDataService,
+    CoursesFacadeService
   ]
 })
 export class CoursesModule {

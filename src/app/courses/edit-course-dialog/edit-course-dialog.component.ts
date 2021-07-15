@@ -3,8 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Course} from '../model/course';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {CoursesHttpService} from '../services/courses-http.service';
-import { CourseEntityService } from '../services/course.entity.service';
+import { CoursesFacadeService } from '../services/courses-facade.service';
 
 @Component({
   selector: 'course-dialog',
@@ -28,7 +27,7 @@ export class EditCourseDialogComponent {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditCourseDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    private coursesService: CourseEntityService) {
+    private coursesFacade: CoursesFacadeService) {
 
     this.dialogTitle = data.dialogTitle;
     this.course = data.course;
@@ -64,10 +63,10 @@ export class EditCourseDialogComponent {
       ...this.form.value
     };
     if (this.mode === 'update') {
-      this.coursesService.update(course);
+      this.coursesFacade.update(course);
       this.dialogRef.close();
     } else if (this.mode === 'create') {
-      this.coursesService.add(course).subscribe(newCourse => {
+      this.coursesFacade.add(course).subscribe(newCourse => {
         console.log('New Course', newCourse);
         this.dialogRef.close();
       });
