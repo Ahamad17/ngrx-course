@@ -48,7 +48,7 @@ export class CoursesHttpService {
       return this.http.post('/api/course', course);
     }
 
-    deleteCourse(courseId: number) {
+    deleteCourse(courseId: any) {
       return this.http.delete('/api/course/' + courseId);
     }
 

@@ -143,6 +143,8 @@ export class CoursesEntityFacadeService {
     return this.store.dispatch(addCourse({course}));
   }
 
+  find(courseUrl: string) {}
+
   update(course: Course) {
     const update: Update<Course> = {
       id: course.id,

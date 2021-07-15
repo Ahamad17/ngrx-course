@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../model/course';
+import { AkitaCourseService } from './Akita-store.service';
 import { CoursesDataFacadeService } from './NgRx-Data.service';
+import { CoursesEntityFacadeService } from './NgRx-entity.service';
 
 @Injectable()
 export class CoursesFacadeService {
@@ -10,7 +12,7 @@ export class CoursesFacadeService {
 
   promoTotal$ = this.coursesService.promoTotal$;
 
-  constructor(private coursesService: CoursesDataFacadeService) { }
+  constructor(private coursesService: AkitaCourseService) { }
 
   getAll() {
     return this.coursesService.getAll();

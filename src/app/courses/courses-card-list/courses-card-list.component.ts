@@ -43,7 +43,9 @@ export class CoursesCardListComponent implements OnInit {
     }
 
   onDeleteCourse(course: Course) {
-    this.coursesFacadeService.delete(course);
+    this.coursesFacadeService.delete(course).subscribe(res => {
+      console.log(res);
+    });
   }
 
 }

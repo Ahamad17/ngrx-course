@@ -68,10 +68,14 @@ export class EditCourseDialogComponent {
     };
 
     if (this.mode === 'update') {
-      this.coursesFacadeService.update(course);
+      this.coursesFacadeService.update(course).subscribe(res => {
+        console.log(res);
+      });
       this.dialogRef.close();
     } else if (this.mode === 'create') {
-      this.coursesFacadeService.add(course);
+      this.coursesFacadeService.add(course).subscribe(res => {
+        console.log(res);
+      });
       this.dialogRef.close();
     }
   }

@@ -23,7 +23,7 @@ import { EntityDataModule } from '@ngrx/data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { reducers, metaReducers } from './reducers';
 import { AuthGaurd } from './auth/auth.guard';
-
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 
 const routes: Routes = [
   {
@@ -67,6 +67,7 @@ const routes: Routes = [
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({ stateKey: 'router', routerState: RouterState.Minimal }),
     EntityDataModule.forRoot({}),
+    AkitaNgDevtools.forRoot()
   ],
   bootstrap: [AppComponent]
 })

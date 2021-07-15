@@ -32,7 +32,7 @@ import { StoreModule } from '@ngrx/store';
 import { CoursesEffects, CoursesEntityFacadeService, coursesReducer } from './services/NgRx-entity.service';
 import { CoursesFacadeService } from './services/courses-facade.service';
 import { CourseDataService, CourseEntityService, CoursesDataFacadeService } from './services/NgRx-Data.service';
-
+import { AkitaCourseService } from './services/Akita-store.service';
 
 export const coursesRoutes: Routes = [
   {
@@ -101,7 +101,8 @@ const entityMetadata: EntityMetadataMap = {
     CoursesFacadeService,
     CoursesDataFacadeService,
     CourseDataService,
-    CourseEntityService
+    CourseEntityService,
+    AkitaCourseService
   ]
 })
 export class CoursesModule {
