@@ -67,16 +67,6 @@ export class AkitaCourseService {
   }
 
   getAll(): Observable<Course[]> {
-    // return (<Observable<any>>(<unknown>this.akitaCourseQuery.selectAreCoursesLoaded$)).pipe(tap(isloaded => {
-    //   if (!isloaded) {
-    //     this.coursesHttpService.findAllCourses().pipe(
-    //       tap(courses => {
-    //         this.store.loadCourses(courses, true);
-    //       }), first()
-    //     );
-    //   }
-    // }), filter(isloaded => isloaded), first());
-
     return this.coursesHttpService.findAllCourses().pipe(
       tap(courses => {
         this.store.loadCourses(courses, true);

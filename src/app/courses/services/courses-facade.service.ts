@@ -12,7 +12,7 @@ export class CoursesFacadeService {
 
   promoTotal$ = this.coursesService.promoTotal$;
 
-  constructor(private coursesService: AkitaCourseService) { }
+  constructor(private coursesService: CoursesDataFacadeService) { }
 
   getAll() {
     return this.coursesService.getAll();
